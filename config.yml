@@ -1,0 +1,209 @@
+# Wazobia FM Article Scraper Configuration
+# ========================================
+
+site_config:
+  name: "Wazobia FM"
+  base_url: "https://www.wazobiafm.com"
+  user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+  delay_between_requests: 2  # seconds
+  max_retries: 3
+  timeout: 30
+
+extraction_methods:
+  # Priority order for extraction methods
+  priority:
+    - "json_ld"
+    - "html_selectors" 
+    - "fallback"
+  
+  # JSON-LD structured data extraction
+  json_ld:
+    script_selector: 'script[type="application/ld+json"]'
+    article_types:
+      - "Article"
+      - "NewsArticle"
+      - "BlogPosting"
+    field_mapping:
+      title:
+        - "name"
+        - "headline"
+        - "title"
+      content:
+        - "articleBody"
+        - "description"
+        - "text"
+      author:
+        - "author.name"
+        - "author"
+        - "creator"
+      date:
+        - "datePublished"
+        - "dateCreated"
+        - "publishDate"
+      image:
+        - "image.url"
+        - "image"
+        - "thumbnail"
+      tags:
+        - "keywords"
+        - "tags"
+        - "category"
+
+wazobia_fm_urls:
+  # Main news sections for Wazobia FM
+  news_sections:
+    - "/lagos/news/"
+    - "/abuja/news/"
+    - "/kano/news/"
+    - "/onitsha/news/"
+    - "/port-harcourt/news/"
+    - "/news/newspapertori/"
+    - "/news/hottori/"
+    - "/news/editorial/"
+    - "/news/musicgist/"
+    - "/news/wazobiaunawakeupshow/"
+  
+  content_categories:
+    - "news"
+    - "hottori"
+    - "editorial"
+    - "musicgist"
+    - "newspapertori"
+    - "wazobiaunawakeupshow"
+
+article_selectors:
+  article_links:
+    # Wazobia FM specific selectors
+    - "a[href*='/news/']"
+    - "a[href*='/hottori/']"
+    - "a[href*='/editorial/']"
+    - "a[href*='/musicgist/']"
+    - "a[href*='/newspapertori/']"
+    - ".news-item a"
+    - ".article-link"
+    - ".post-link"
+    - "a[href]"  # Fallback to all links
+  
+  article_container:
+    - "article"
+    - ".article-content"
+    - ".post-content"
+    - ".content"
+    - ".news-content"
+    - "main"
+    - ".entry-content"
+  
+  title:
+    - "h1.entry-title"
+    - "h1"
+    - ".article-title"
+    - ".post-title"
+    - ".news-title"
+    - "title"
+    - "h2"
+  
+  content:
+    - ".entry-content p"
+    - ".article-body p"
+    - ".post-body p"
+    - ".content-body p"
+    - ".news-body p"
+    - ".entry-content"
+    - ".article-body"
+    - ".post-body"
+    - "p"
+  
+  author:
+    - ".entry-meta .author"
+    - ".byline"
+    - ".post-author"
+    - "[data-author]"
+    - ".writer"
+    - ".author-name"
+  
+  date:
+    - ".entry-meta .date"
+    - ".publish-date"
+    - ".post-date"
+    - "time"
+    - "[datetime]"
+    - ".entry-date"
+  
+  tags:
+    - ".entry-tags a"
+    - ".tags a"
+    - ".categories a"
+    - ".post-tags a"
+    - ".tag"
+  
+  images:
+    - ".entry-content img"
+    - ".article-image img"
+    - ".featured-image img"
+    - ".post-image img"
+    - "img"
+
+content_filters:
+  exclude_selectors:
+    - ".advertisement"
+    - ".ads"
+    - ".sidebar"
+    - ".navigation"
+    - ".footer"
+    - ".header"
+    - ".comments"
+    - "script"
+    - "style"
+    - "nav"
+  
+  min_content_length: 100
+  max_content_length: 50000
+  
+  # Skip patterns for URLs
+  skip_patterns:
+    - "/contact"
+    - "/about"
+    - "/privacy"
+    - "/terms"
+    - "/sitemap"
+    - ".jpg"
+    - ".png"
+    - ".pdf"
+    - "/podcasts/"
+    - "/shows/"
+    - "/archive/"
+    - "/feed/"
+    - "/browse-by-day"
+  
+  # Valid content patterns
+  valid_patterns:
+    - "/news/"
+    - "/hottori/"
+    - "/editorial/"
+    - "/musicgist/"
+    - "/newspapertori/"
+    - "/wazobiaunawakeupshow/"
+
+output:
+  format: "json"
+  filename_template: "wazobia_fm_articles_{timestamp}"
+  fields:
+    - "title"
+    - "content"
+    - "author"
+    - "date"
+    - "url"
+    - "tags"
+    - "images"
+    - "scraped_at"
+    - "content_length"
+    - "category"
+
+rate_limiting:
+  requests_per_minute: 30
+  respect_robots_txt: true
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "wazobia_scraper.log"
