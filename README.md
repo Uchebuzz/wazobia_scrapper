@@ -5,14 +5,13 @@ A comprehensive web scraper for extracting news articles from Wazobia FM (https:
 
 ## 🎯 Features
 
-- **Multi-Section Scraping**: Automatically extracts articles from all Wazobia FM news sections
-- **Regional Coverage**: Supports content from Lagos, Abuja, Kano, Onitsha, and Port Harcourt
-- **Content Categories**: Handles News, Hot Tori, Editorial, Music Gist, and more
-- **Multiple Extraction Methods**: JSON-LD, HTML selectors, and fallback extraction
-- **Pidgin-Optimized**: Specialized text cleaning for Nigerian Pidgin English
-- **Data Analysis**: Built-in visualization and statistical analysis
-- **Multiple Export Formats**: JSON, CSV, and Excel output
-- **Jupyter Notebook Ready**: Interactive analysis and visualization
+- 🌍 Multi-Regional Coverage: Extracts content from Lagos, Abuja, Kano, Onitsha, and Port Harcourt
+- 📰 Comprehensive Categories: News, Hot Tori, Editorial, Music Gist, Newspaper Tori
+- 🔄 Smart Extraction: Multiple extraction methods (JSON-LD, HTML selectors, fallback)
+- ⚙️ YAML Configuration: Easy-to-modify settings
+- 📊 Auto CSV Export: Automatically saves scraped data
+- 🛡️ Rate Limiting: Respectful scraping with configurable delays
+- 🧹 Clean Data: Optimized for Nigerian Pidgin English content
 
 ## 📦 Installation
 
